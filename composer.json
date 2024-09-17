@@ -1,0 +1,56 @@
+{
+    "name": "clickstudioltd/laravel-whatsapp-notification-channel",
+    "description": "Provides WhatsApp notification channel for Laravel",
+    "keywords": ["laravel", "whatsapp", "notification", "messaging"],
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/clickstudioltd/laravel-whatsapp-notification-channel/issues",
+        "source": "https://github.com/clickstudioltd/laravel-whatsapp-notification-channel"
+    },
+    "authors": [
+        {
+            "name": "Mahan Heshmati Moghaddam Tabrizi",
+            "email": "mahangm@gmail.com",
+            "homepage": "https://github.com/mahangm",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.2|^8.0",
+        "guzzlehttp/guzzle": "^7.2",
+        "illuminate/notifications": "^7.0 || ^8.0 || ^9.0 || ^10.0",
+        "illuminate/support": "^7.0 || ^8.0 || ^9.0 || ^10.0",
+        "illuminate/events": "^7.0 || ^8.0 || ^9.0 || ^10.0",
+        "illuminate/queue": "^7.0 || ^8.0 || ^9.0 || ^10.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.3",
+        "phpunit/phpunit": "^8.5|^9.5",
+        "orchestra/testbench": "^5.0 || ^6.0 || ^7.0 || ^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "NotificationChannels\\WhatsApp\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "NotificationChannels\\WhatsApp\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test:unit": "phpunit --verbose --testsuite Unit",
+        "test:integration": "phpunit --verbose --testsuite Integration"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NotificationChannels\\WhatsApp\\WhatsAppProvider"
+            ]
+        }
+    }
+}
