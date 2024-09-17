@@ -35,7 +35,7 @@ Make sure to add this repository to your `composer.json`:
 Then, you can install the package via composer:
 
 ``` bash
-composer require clickstudio/laravel-whatsapp-notification-channel
+composer require clickstudioltd/laravel-whatsapp-notification-channel
 ```
 
 ### WhatsApp Provider
@@ -130,7 +130,7 @@ public function toWhatsApp($notifiable)
 
 - `from('')`: Accepts a phone to use as the notification sender.
 - `to('')`: Accepts a phone to use as the notification receiver.
-- `template('')`: Accepts an array value for the notification message template.
+- `template([])`: Accepts an array value for the notification message template.
 
 ## Changelog
 
