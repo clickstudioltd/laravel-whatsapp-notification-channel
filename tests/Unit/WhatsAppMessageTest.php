@@ -14,15 +14,15 @@ abstract class WhatsAppMessageTest extends MockeryTestCase
     abstract public function it_can_accept_a_template_when_constructing_a_message();
 
     /** @test */
-    public function it_can_set_the_from()
+    public function it_can_get_set_the_options()
     {
-        $this->message->from('+1234567890');
+        $this->message->options([]);
 
-        $this->assertEquals('+1234567890', $this->message->from);
+        $this->assertEquals([], $this->message->getOptions());
     }
 
     /** @test */
-    public function it_can_return_the_from_using_getter()
+    public function it_can_get_set_the_from()
     {
         $this->message->from('+1234567890');
 
@@ -30,15 +30,7 @@ abstract class WhatsAppMessageTest extends MockeryTestCase
     }
 
     /** @test */
-    public function it_can_set_the_to()
-    {
-        $this->message->to('+1234567890');
-
-        $this->assertEquals('+1234567890', $this->message->to);
-    }
-
-    /** @test */
-    public function it_can_return_the_to_using_getter()
+    public function it_can_get_set_the_to()
     {
         $this->message->to('+1234567890');
 

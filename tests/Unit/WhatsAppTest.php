@@ -15,7 +15,7 @@ use NotificationChannels\WhatsApp\Messages\WhatsAppTemplateMessage;
 class WhatsAppTest extends MockeryTestCase
 {
     /** @var WhatsAppClient */
-    protected $whatsappClient;
+    protected $whatsAppClient;
 
     /** @var WhatsAppConfig */
     protected $config;
@@ -24,16 +24,16 @@ class WhatsAppTest extends MockeryTestCase
     protected $dispatcher;
 
     /** @var WhatsApp */
-    protected $whatsapp;
+    protected $whatsApp;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->whatsappClient = Mockery::mock(WhatsAppClient::class);
+        $this->whatsAppClient = Mockery::mock(WhatsAppClient::class);
         $this->config = Mockery::mock(WhatsAppConfig::class);
         $this->dispatcher = Mockery::mock(Dispatcher::class);
-        $this->whatsapp = new WhatsApp($this->whatsappClient, $this->config);
+        $this->whatsApp = new WhatsApp($this->whatsAppClient, $this->config);
     }
 
     /** @test */
@@ -53,7 +53,7 @@ class WhatsAppTest extends MockeryTestCase
             ->once()
             ->andReturn(null);
 
-        $this->whatsappClient
+        $this->whatsAppClient
             ->shouldReceive('enqueueMessage')
             ->once()
             ->with([
@@ -63,10 +63,10 @@ class WhatsAppTest extends MockeryTestCase
                 'template' => [
                     'name' => 'sample_template'
                 ]
-            ])
+            ], [])
             ->andReturn([]);
 
-        $this->whatsapp->sendMessage($message, '+22222222222');
+        $this->whatsApp->sendMessage($message, '+22222222222');
     }
 
     /** @test */
@@ -89,7 +89,7 @@ class WhatsAppTest extends MockeryTestCase
             'name' => 'sample_template'
         ]);
 
-        $this->whatsapp->sendMessage($templateMessage, null);
+        $this->whatsApp->sendMessage($templateMessage, null);
     }
 
     /** @test */
@@ -98,7 +98,7 @@ class WhatsAppTest extends MockeryTestCase
         $this->expectException(CouldNotSendNotification::class);
         $this->expectExceptionMessage('Notification was not sent. Message object class');
 
-        $this->whatsapp->sendMessage(new InvalidMessage(), null);
+        $this->whatsApp->sendMessage(new InvalidMessage(), null);
     }
 
     /** @test */
@@ -116,7 +116,7 @@ class WhatsAppTest extends MockeryTestCase
             ->once()
             ->andReturn($debugTo);
 
-        $this->whatsappClient
+        $this->whatsAppClient
             ->shouldReceive('enqueueMessage')
             ->once()
             ->with([
@@ -126,14 +126,14 @@ class WhatsAppTest extends MockeryTestCase
                 'template' => [
                     'name' => 'sample_template'
                 ]
-            ])
+            ], [])
             ->andReturn([]);
 
         $message = new WhatsAppTemplateMessage([
             'name' => 'sample_template'
         ]);
 
-        $this->whatsapp->sendMessage($message, '+1111111111');
+        $this->whatsApp->sendMessage($message, '+1111111111');
     }
 }
 

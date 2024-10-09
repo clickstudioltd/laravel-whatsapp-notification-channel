@@ -14,7 +14,7 @@ class WhatsAppChannel
     /**
      * @var WhatsApp
      */
-    protected $whatsapp;
+    protected $whatsApp;
 
     /**
      * @var Dispatcher
@@ -24,12 +24,12 @@ class WhatsAppChannel
     /**
      * WhatsAppChannel constructor.
      *
-     * @param WhatsApp $whatsapp
+     * @param WhatsApp $whatsApp
      * @param Dispatcher $events
      */
-    public function __construct(WhatsApp $whatsapp, Dispatcher $events)
+    public function __construct(WhatsApp $whatsApp, Dispatcher $events)
     {
-        $this->whatsapp = $whatsapp;
+        $this->whatsApp = $whatsApp;
         $this->events = $events;
     }
 
@@ -53,7 +53,7 @@ class WhatsAppChannel
 
             $to = $this->getTo($notifiable, $notification, $message);
 
-            return $this->whatsapp->sendMessage($message, $to);
+            return $this->whatsApp->sendMessage($message, $to);
         } catch (Exception $exception) {
             $event = new NotificationFailed(
                 $notifiable,
@@ -67,7 +67,7 @@ class WhatsAppChannel
 
             $this->events->dispatch($event);
 
-            if ($this->whatsapp->config->isIgnoredErrorCode($exception->getCode())) {
+            if ($this->whatsApp->config->isIgnoredErrorCode($exception->getCode())) {
                 return;
             }
 
@@ -93,8 +93,8 @@ class WhatsAppChannel
         if ($notifiable->routeNotificationFor(self::class, $notification)) {
             return $notifiable->routeNotificationFor(self::class, $notification);
         }
-        if ($notifiable->routeNotificationFor('WhatsApp', $notification)) {
-            return $notifiable->routeNotificationFor('WhatsApp', $notification);
+        if ($notifiable->routeNotificationFor('whatsapp', $notification)) {
+            return $notifiable->routeNotificationFor('whatsapp', $notification);
         }
         if (isset($notifiable->phone_number)) {
             return $notifiable->phone_number;

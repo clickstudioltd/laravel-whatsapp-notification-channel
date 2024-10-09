@@ -15,7 +15,7 @@ use NotificationChannels\WhatsApp\Messages\WhatsAppTemplateMessage;
 class IntegrationTest extends MockeryTestCase
 {
     /** @var WhatsAppClient */
-    protected $whatsappClient;
+    protected $whatsAppClient;
 
     /** @var Notification */
     protected $notification;
@@ -27,7 +27,7 @@ class IntegrationTest extends MockeryTestCase
     {
         parent::setUp();
 
-        $this->whatsappClient = Mockery::mock(WhatsAppClient::class);
+        $this->whatsAppClient = Mockery::mock(WhatsAppClient::class);
         $this->notification = Mockery::mock(Notification::class);
         $this->events = Mockery::mock(Dispatcher::class);
     }
@@ -35,7 +35,7 @@ class IntegrationTest extends MockeryTestCase
     /** @test */
     public function it_can_send_a_template_message()
     {
-        $this->whatsappClient
+        $this->whatsAppClient
             ->shouldReceive('enqueueMessage')
             ->once()
             ->with([
@@ -45,14 +45,14 @@ class IntegrationTest extends MockeryTestCase
                 'template' => [
                     'name' => 'sample_template'
                 ],
-            ])
+            ], [])
             ->andReturn([]);
 
         $config = new WhatsAppConfig([
             'from' => '+11111111111',
         ]);
-        $whatsapp = new WhatsApp($this->whatsappClient, $config);
-        $channel = new WhatsAppChannel($whatsapp, $this->events);
+        $whatsApp = new WhatsApp($this->whatsAppClient, $config);
+        $channel = new WhatsAppChannel($whatsApp, $this->events);
         $message = new WhatsAppTemplateMessage([
             'name' => 'sample_template'
         ]);

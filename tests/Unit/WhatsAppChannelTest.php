@@ -17,7 +17,7 @@ use NotificationChannels\WhatsApp\Messages\WhatsAppTemplateMessage;
 class WhatsAppChannelTest extends MockeryTestCase
 {
     /** @var WhatsApp */
-    protected $whatsapp;
+    protected $whatsApp;
 
     /** @var Dispatcher */
     protected $dispatcher;
@@ -29,10 +29,10 @@ class WhatsAppChannelTest extends MockeryTestCase
     {
         parent::setUp();
 
-        $this->whatsapp = Mockery::mock(WhatsApp::class);
+        $this->whatsApp = Mockery::mock(WhatsApp::class);
         $this->dispatcher = Mockery::mock(Dispatcher::class);
 
-        $this->channel = new WhatsAppChannel($this->whatsapp, $this->dispatcher);
+        $this->channel = new WhatsAppChannel($this->whatsApp, $this->dispatcher);
     }
 
     /** @test */
@@ -43,13 +43,14 @@ class WhatsAppChannelTest extends MockeryTestCase
         $notification = Mockery::mock(Notification::class);
         $notification->shouldReceive('toWhatsApp')->andReturn([]);
 
-        $this->whatsapp->config = new WhatsAppConfig([
+        $this->whatsApp->config = new WhatsAppConfig([
             'ignored_error_codes' => [],
         ]);
 
         $this->dispatcher
             ->shouldReceive('dispatch')
-            ->atLeast()->once()
+            ->atLeast()
+            ->once()
             ->with(Mockery::type(NotificationFailed::class));
 
         $this->expectException(CouldNotSendNotification::class);
@@ -71,9 +72,10 @@ class WhatsAppChannelTest extends MockeryTestCase
         $notification = Mockery::mock(Notification::class);
         $notification->shouldReceive('toWhatsApp')->andReturn($message);
 
-        $this->whatsapp
+        $this->whatsApp
             ->shouldReceive('sendMessage')
-            ->atLeast()->once()
+            ->atLeast()
+            ->once()
             ->with($message, '+1111111111');
 
         $this->channel->send($notifiable, $notification);
@@ -82,7 +84,7 @@ class WhatsAppChannelTest extends MockeryTestCase
     /** @test */
     public function it_will_fire_an_event_in_case_of_an_invalid_message()
     {
-        $this->whatsapp->config = new WhatsAppConfig([
+        $this->whatsApp->config = new WhatsAppConfig([
             'ignored_error_codes' => [],
         ]);
 
@@ -107,7 +109,7 @@ class WhatsAppChannelTest extends MockeryTestCase
     /** @test */
     public function it_will_ignore_specific_error_codes()
     {
-        $this->whatsapp->config = new WhatsAppConfig([
+        $this->whatsApp->config = new WhatsAppConfig([
             'ignored_error_codes' => [
                 400,
             ],
@@ -117,7 +119,7 @@ class WhatsAppChannelTest extends MockeryTestCase
             'name' => 'sample_template'
         ]);
 
-        $this->whatsapp
+        $this->whatsApp
             ->shouldReceive('sendMessage')
             ->with($message, '+22222222222')
             ->andThrow(new HttpException('error', 400));
@@ -139,7 +141,7 @@ class WhatsAppChannelTest extends MockeryTestCase
     /** @test */
     public function it_will_rethrow_non_ignored_error_codes()
     {
-        $this->whatsapp->config = new WhatsAppConfig([
+        $this->whatsApp->config = new WhatsAppConfig([
             'ignored_error_codes' => [
                 55555,
             ],
@@ -149,7 +151,7 @@ class WhatsAppChannelTest extends MockeryTestCase
             'name' => 'sample_template'
         ]);
 
-        $this->whatsapp
+        $this->whatsApp
             ->shouldReceive('sendMessage')
             ->with($message, '+22222222222')
             ->andThrow(new HttpException('error', 400));
@@ -173,11 +175,11 @@ class WhatsAppChannelTest extends MockeryTestCase
     /** @test */
     public function it_will_ignore_all_error_codes()
     {
-        $this->whatsapp->config = new WhatsAppConfig([
+        $this->whatsApp->config = new WhatsAppConfig([
             'ignored_error_codes' => ['*'],
         ]);
 
-        $this->whatsapp
+        $this->whatsApp
             ->shouldReceive('sendMessage')
             ->andThrow(new HttpException('error', 400));
 

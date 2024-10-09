@@ -28,15 +28,7 @@ class WhatsAppTemplateMessageTest extends WhatsAppMessageTest
     }
 
     /** @test */
-    public function it_can_set_the_template()
-    {
-        $this->message->template([]);
-
-        $this->assertEquals([], $this->message->template);
-    }
-
-    /** @test */
-    public function it_can_return_the_template_using_getter()
+    public function it_can_get_set_the_template()
     {
         $this->message->template([]);
 

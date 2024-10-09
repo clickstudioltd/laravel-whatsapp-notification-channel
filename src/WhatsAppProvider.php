@@ -6,7 +6,6 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
-use NotificationChannels\WhatsApp\Exceptions\InvalidConfigException;
 
 class WhatsAppProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -36,25 +35,23 @@ class WhatsAppProvider extends ServiceProvider implements DeferrableProvider
             /** @var WhatsAppConfig $config */
             $config = $app->make(WhatsAppConfig::class);
 
+            $options = [];
+
             if ($config->getAPIKey()) {
-                $options = [
-                    'headers' => [
-                        'X-API-Key' => $config->getAPIKey()
-                    ]
+                $options['headers'] = [
+                    'X-API-Key' => $config->getAPIKey()
                 ];
-
-                if ($config->getProxy()) {
-                    $options['proxy'] = $config->getProxy();
-
-                    if ($config->getProxyCAInfo()) {
-                        $options['curl'] = [CURLOPT_PROXY_CAINFO => $config->getProxyCAInfo()];
-                    }
-                }
-
-                return new WhatsAppClient($options);
             }
 
-            throw InvalidConfigException::missingConfig();
+            if ($config->getProxy()) {
+                $options['proxy'] = $config->getProxy();
+
+                if ($config->getProxyCAInfo()) {
+                    $options['curl'] = [CURLOPT_PROXY_CAINFO => $config->getProxyCAInfo()];
+                }
+            }
+
+            return new WhatsAppClient($options);
         });
 
         $this->app->singleton(WhatsApp::class, function (Application $app) {

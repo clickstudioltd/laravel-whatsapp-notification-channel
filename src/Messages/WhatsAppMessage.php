@@ -5,18 +5,25 @@ namespace NotificationChannels\WhatsApp\Messages;
 abstract class WhatsAppMessage
 {
     /**
+     * HTTP client request options.
+     *
+     * @var array
+     */
+    protected $options;
+
+    /**
      * The phone number the message should be sent from.
      *
      * @var string
      */
-    public $from;
+    protected $from;
 
     /**
      * The phone number the message should be sent to. (Override the existing To number otherwise optional.)
      *
      * @var string
      */
-    public $to;
+    protected $to;
 
     /**
      * Create a message object.
@@ -27,6 +34,29 @@ abstract class WhatsAppMessage
     public static function create(): self
     {
         return new static();
+    }
+
+    /**
+     * Set the message specific HTTP client request options.
+     *
+     * @param  string $from
+     * @return $this
+     */
+    public function options(array $options): self
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * Get the message specific HTTP client request options.
+     *
+     * @return array|null
+     */
+    public function getOptions(): ?array
+    {
+        return $this->options;
     }
 
     /**

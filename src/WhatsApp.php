@@ -69,7 +69,7 @@ class WhatsApp
             'to' => $to,
             'type' => 'template',
             'template' => $message->getTemplate(),
-        ]);
+        ], $message->getOptions());
     }
 
     /**
