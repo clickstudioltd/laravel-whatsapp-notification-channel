@@ -39,7 +39,7 @@ abstract class WhatsAppMessage
     /**
      * Set the message specific HTTP client request options.
      *
-     * @param  string $from
+     * @param  array $options
      * @return $this
      */
     public function options(array $options): self
